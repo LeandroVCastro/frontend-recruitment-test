@@ -4,12 +4,12 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import { useHelloWorldQuery } from "./generated/graphql";
-import { BoxComponent } from "./components/Box/Box";
+import Button from "@mui/material/Button";
 
 const App = () => {
   const { data, loading } = useHelloWorldQuery();
 
-  return <BoxComponent>hello world</BoxComponent>;
+  return <Button variant="contained">Hello world</Button>;
 };
 
 export default App;
