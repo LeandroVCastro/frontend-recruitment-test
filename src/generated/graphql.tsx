@@ -17,21 +17,159 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type CreateNoteResponse = {
+  __typename?: 'CreateNoteResponse';
+  enterprise?: Maybe<GetEnterpriseResponse>;
+  enterpriseId?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  insertedAt?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type DeleteEnterpriseResponse = {
+  __typename?: 'DeleteEnterpriseResponse';
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type DeleteNoteResponse = {
+  __typename?: 'DeleteNoteResponse';
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type EnterpriseDefault = {
+  __typename?: 'EnterpriseDefault';
+  cnpj?: Maybe<Scalars['String']['output']>;
+  commercialName?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  insertedAt?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type GetEnterpriseResponse = {
+  __typename?: 'GetEnterpriseResponse';
+  cnpj?: Maybe<Scalars['String']['output']>;
+  commercialName?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  insertedAt?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  notes?: Maybe<Array<Maybe<NotesDefault>>>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type HelloWorldResponse = {
+  __typename?: 'HelloWorldResponse';
+  message?: Maybe<Scalars['String']['output']>;
+  now?: Maybe<Scalars['String']['output']>;
+};
+
+export type ListEnterpriseResponse = {
+  __typename?: 'ListEnterpriseResponse';
+  items?: Maybe<Array<Maybe<EnterpriseDefault>>>;
+};
+
+export type NotesDefault = {
+  __typename?: 'NotesDefault';
+  enterpriseId?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  insertedAt?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+};
+
+export type RootMutationType = {
+  __typename?: 'RootMutationType';
+  /** Create a new Enterprise */
+  createEnterprise?: Maybe<GetEnterpriseResponse>;
+  /** Add a note to an Enterprise */
+  createNote?: Maybe<CreateNoteResponse>;
+  /** Delete an Enterprise by ID */
+  deleteEnterprise?: Maybe<DeleteEnterpriseResponse>;
+  /** Delete an Note by ID */
+  deleteNote?: Maybe<DeleteNoteResponse>;
+  /** Update an Enterprise by ID */
+  updateEnterprise?: Maybe<GetEnterpriseResponse>;
+  /** Update an Note by ID */
+  updateNote?: Maybe<CreateNoteResponse>;
+};
+
+
+export type RootMutationTypeCreateEnterpriseArgs = {
+  cnpj: Scalars['String']['input'];
+  commercialName: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+export type RootMutationTypeCreateNoteArgs = {
+  enterpriseId: Scalars['ID']['input'];
+  note: Scalars['String']['input'];
+};
+
+
+export type RootMutationTypeDeleteEnterpriseArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootMutationTypeDeleteNoteArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootMutationTypeUpdateEnterpriseArgs = {
+  cnpj: Scalars['String']['input'];
+  commercialName: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+export type RootMutationTypeUpdateNoteArgs = {
+  id: Scalars['ID']['input'];
+  note: Scalars['String']['input'];
+};
+
 export type RootQueryType = {
   __typename?: 'RootQueryType';
+  /** Get a single enterprise by its ID */
+  getEnterprise?: Maybe<GetEnterpriseResponse>;
+  /** Get the current total of enterprises */
+  getTotalEnterprises?: Maybe<Scalars['Int']['output']>;
   /** Returns a Hello World message */
-  helloWorld?: Maybe<Scalars['String']['output']>;
+  helloWorld?: Maybe<HelloWorldResponse>;
+  /** List enterprises */
+  listEnterprises?: Maybe<ListEnterpriseResponse>;
+};
+
+
+export type RootQueryTypeGetEnterpriseArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type RootQueryTypeListEnterprisesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HelloWorldQuery = { __typename?: 'RootQueryType', helloWorld?: string | null };
+export type HelloWorldQuery = { __typename?: 'RootQueryType', helloWorld?: { __typename?: 'HelloWorldResponse', message?: string | null, now?: string | null } | null };
 
 
 export const HelloWorldDocument = gql`
     query helloWorld {
-  helloWorld
+  helloWorld {
+    message
+    now
+  }
 }
     `;
 
