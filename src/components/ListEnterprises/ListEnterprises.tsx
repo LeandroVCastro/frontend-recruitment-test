@@ -25,7 +25,7 @@ export const ListEnterprisesComponent = () => {
 
   return (
     <>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="Enterprises Table">
         <HeaderListEnterpriseComponent />
         <BodyListEnterpriseComponent />
       </Table>

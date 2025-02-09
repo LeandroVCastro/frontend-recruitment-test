@@ -158,12 +158,70 @@ export type RootQueryTypeListEnterprisesArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type ListEnterprisesQueryVariables = Exact<{
+  offset: Scalars['Int']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type ListEnterprisesQuery = { __typename?: 'RootQueryType', getTotalEnterprises?: number | null, listEnterprises?: { __typename?: 'ListEnterpriseResponse', items?: Array<{ __typename?: 'EnterpriseDefault', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null> | null } | null };
+
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type HelloWorldQuery = { __typename?: 'RootQueryType', helloWorld?: { __typename?: 'HelloWorldResponse', message?: string | null, now?: string | null } | null };
 
 
+export const ListEnterprisesDocument = gql`
+    query listEnterprises($offset: Int!, $limit: Int!) {
+  getTotalEnterprises
+  listEnterprises(offset: $offset, limit: $limit) {
+    items {
+      cnpj
+      commercialName
+      description
+      id
+      insertedAt
+      name
+      updatedAt
+    }
+  }
+}
+    `;
+
+/**
+ * __useListEnterprisesQuery__
+ *
+ * To run a query within a React component, call `useListEnterprisesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListEnterprisesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListEnterprisesQuery({
+ *   variables: {
+ *      offset: // value for 'offset'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useListEnterprisesQuery(baseOptions: Apollo.QueryHookOptions<ListEnterprisesQuery, ListEnterprisesQueryVariables> & ({ variables: ListEnterprisesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListEnterprisesQuery, ListEnterprisesQueryVariables>(ListEnterprisesDocument, options);
+      }
+export function useListEnterprisesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListEnterprisesQuery, ListEnterprisesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListEnterprisesQuery, ListEnterprisesQueryVariables>(ListEnterprisesDocument, options);
+        }
+export function useListEnterprisesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ListEnterprisesQuery, ListEnterprisesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ListEnterprisesQuery, ListEnterprisesQueryVariables>(ListEnterprisesDocument, options);
+        }
+export type ListEnterprisesQueryHookResult = ReturnType<typeof useListEnterprisesQuery>;
+export type ListEnterprisesLazyQueryHookResult = ReturnType<typeof useListEnterprisesLazyQuery>;
+export type ListEnterprisesSuspenseQueryHookResult = ReturnType<typeof useListEnterprisesSuspenseQuery>;
+export type ListEnterprisesQueryResult = Apollo.QueryResult<ListEnterprisesQuery, ListEnterprisesQueryVariables>;
 export const HelloWorldDocument = gql`
     query helloWorld {
   helloWorld {

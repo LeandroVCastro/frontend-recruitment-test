@@ -1,0 +1,14 @@
+query listEnterprises($offset: Int!, $limit: Int!) {
+  getTotalEnterprises
+  listEnterprises(offset: $offset, limit: $limit) {
+    items {
+      cnpj
+      commercialName
+      description
+      id
+      insertedAt
+      name
+      updatedAt
+    }
+  }
+}

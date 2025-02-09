@@ -1,37 +1,45 @@
-import React from "react";
-
-import logo from "./logo.svg";
 import "./App.css";
-
-import { useHelloWorldQuery } from "./generated/graphql";
+import { useListEnterprisesQuery } from "./generated/graphql";
 import Button from "@mui/material/Button";
 import { ListEnterprisesComponent } from "./components/ListEnterprises/ListEnterprises";
-import { Box, Paper, Typography } from "@mui/material";
+import { Divider, Paper, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import AddIcon from "@mui/icons-material/Add";
+import { useEnterprisesStore } from "./states/enterprisesState";
+import { useEffect } from "react";
 
 const App = () => {
-  const { data, loading } = useHelloWorldQuery();
+  const { data, loading, error } = useListEnterprisesQuery({
+    variables: {
+      offset: 0,
+      limit: 10,
+    },
+  });
+
+  const { setEnterprisesList } = useEnterprisesStore();
+
+  useEffect(() => {
+    if (data?.listEnterprises?.items) {
+      setEnterprisesList(data.listEnterprises.items);
+    }
+  }, [data]);
 
   return (
-    <Box>
-      <Grid container direction={"row-reverse"}>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          color="primary"
-          className={`my-4`}
-        >
+    <Paper className={`mt-8`}>
+      <Grid
+        container
+        direction={"row"}
+        justifyContent={`space-between`}
+        className="px-4 py-8"
+      >
+        <Typography variant="h4">Enterprise Manager</Typography>
+        <Button variant="contained" startIcon={<AddIcon />} color="primary">
           New Enterprise
         </Button>
       </Grid>
-      <Paper>
-        <Box className={`p-4`}>
-          <Typography variant="h4">Enterprise Manager</Typography>
-        </Box>
-        <ListEnterprisesComponent />
-      </Paper>
-    </Box>
+      <Divider />
+      <ListEnterprisesComponent />
+    </Paper>
   );
 };
 
