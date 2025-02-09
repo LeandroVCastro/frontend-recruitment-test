@@ -158,6 +158,16 @@ export type RootQueryTypeListEnterprisesArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type CreateEnterpriseMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  commercialName: Scalars['String']['input'];
+  cnpj: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+}>;
+
+
+export type CreateEnterpriseMutation = { __typename?: 'RootMutationType', createEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
+
 export type ListEnterprisesQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
   limit: Scalars['Int']['input'];
@@ -172,6 +182,53 @@ export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 export type HelloWorldQuery = { __typename?: 'RootQueryType', helloWorld?: { __typename?: 'HelloWorldResponse', message?: string | null, now?: string | null } | null };
 
 
+export const CreateEnterpriseDocument = gql`
+    mutation createEnterprise($name: String!, $commercialName: String!, $cnpj: String!, $description: String!) {
+  createEnterprise(
+    name: $name
+    commercialName: $commercialName
+    cnpj: $cnpj
+    description: $description
+  ) {
+    cnpj
+    commercialName
+    description
+    id
+    insertedAt
+    name
+    updatedAt
+  }
+}
+    `;
+export type CreateEnterpriseMutationFn = Apollo.MutationFunction<CreateEnterpriseMutation, CreateEnterpriseMutationVariables>;
+
+/**
+ * __useCreateEnterpriseMutation__
+ *
+ * To run a mutation, you first call `useCreateEnterpriseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEnterpriseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createEnterpriseMutation, { data, loading, error }] = useCreateEnterpriseMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      commercialName: // value for 'commercialName'
+ *      cnpj: // value for 'cnpj'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useCreateEnterpriseMutation(baseOptions?: Apollo.MutationHookOptions<CreateEnterpriseMutation, CreateEnterpriseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateEnterpriseMutation, CreateEnterpriseMutationVariables>(CreateEnterpriseDocument, options);
+      }
+export type CreateEnterpriseMutationHookResult = ReturnType<typeof useCreateEnterpriseMutation>;
+export type CreateEnterpriseMutationResult = Apollo.MutationResult<CreateEnterpriseMutation>;
+export type CreateEnterpriseMutationOptions = Apollo.BaseMutationOptions<CreateEnterpriseMutation, CreateEnterpriseMutationVariables>;
 export const ListEnterprisesDocument = gql`
     query listEnterprises($offset: Int!, $limit: Int!) {
   getTotalEnterprises

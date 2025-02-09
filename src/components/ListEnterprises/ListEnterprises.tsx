@@ -5,7 +5,10 @@ import { HeaderListEnterpriseComponent } from "./HeaderListEnterprise";
 import { BodyListEnterpriseComponent } from "./BodyListEnterprise";
 import { useEnterprisesStore } from "../../states/enterprisesState";
 import { useEffect } from "react";
-import { useListEnterprisesQuery } from "../../generated/graphql";
+import {
+  EnterpriseDefault,
+  useListEnterprisesQuery,
+} from "../../generated/graphql";
 import { LoadingComponent } from "../Loading/Loading";
 import { EmptyStateComponent } from "../EmptyState/EmptyState";
 
@@ -25,7 +28,7 @@ export const ListEnterprisesComponent = () => {
 
   useEffect(() => {
     if (data?.listEnterprises?.items) {
-      setEnterprisesList(data.listEnterprises.items);
+      setEnterprisesList(data.listEnterprises.items as EnterpriseDefault[]);
     }
     setTotalEnterprises(data?.getTotalEnterprises ?? 0);
   }, [data]);

@@ -10,6 +10,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Container } from "@mui/material";
+import { SnackbarProvider, VariantType, useSnackbar } from "notistack";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,9 +18,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <Container maxWidth={"xl"}>
-        <App />
-      </Container>
+      <SnackbarProvider maxSnack={10} autoHideDuration={10000}>
+        <Container maxWidth={"xl"}>
+          <App />
+        </Container>
+      </SnackbarProvider>
     </ApolloProvider>
   </React.StrictMode>
 );
