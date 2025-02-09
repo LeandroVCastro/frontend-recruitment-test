@@ -168,6 +168,24 @@ export type CreateEnterpriseMutationVariables = Exact<{
 
 export type CreateEnterpriseMutation = { __typename?: 'RootMutationType', createEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
 
+export type UpdateEnterpriseMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+  commercialName: Scalars['String']['input'];
+  cnpj: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+}>;
+
+
+export type UpdateEnterpriseMutation = { __typename?: 'RootMutationType', updateEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
+
+export type GetEnterpriseQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetEnterpriseQuery = { __typename?: 'RootQueryType', getEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
+
 export type ListEnterprisesQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
   limit: Scalars['Int']['input'];
@@ -229,6 +247,101 @@ export function useCreateEnterpriseMutation(baseOptions?: Apollo.MutationHookOpt
 export type CreateEnterpriseMutationHookResult = ReturnType<typeof useCreateEnterpriseMutation>;
 export type CreateEnterpriseMutationResult = Apollo.MutationResult<CreateEnterpriseMutation>;
 export type CreateEnterpriseMutationOptions = Apollo.BaseMutationOptions<CreateEnterpriseMutation, CreateEnterpriseMutationVariables>;
+export const UpdateEnterpriseDocument = gql`
+    mutation updateEnterprise($id: ID!, $name: String!, $commercialName: String!, $cnpj: String!, $description: String!) {
+  updateEnterprise(
+    id: $id
+    name: $name
+    commercialName: $commercialName
+    cnpj: $cnpj
+    description: $description
+  ) {
+    cnpj
+    commercialName
+    description
+    id
+    insertedAt
+    name
+    updatedAt
+  }
+}
+    `;
+export type UpdateEnterpriseMutationFn = Apollo.MutationFunction<UpdateEnterpriseMutation, UpdateEnterpriseMutationVariables>;
+
+/**
+ * __useUpdateEnterpriseMutation__
+ *
+ * To run a mutation, you first call `useUpdateEnterpriseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateEnterpriseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateEnterpriseMutation, { data, loading, error }] = useUpdateEnterpriseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      commercialName: // value for 'commercialName'
+ *      cnpj: // value for 'cnpj'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useUpdateEnterpriseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateEnterpriseMutation, UpdateEnterpriseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateEnterpriseMutation, UpdateEnterpriseMutationVariables>(UpdateEnterpriseDocument, options);
+      }
+export type UpdateEnterpriseMutationHookResult = ReturnType<typeof useUpdateEnterpriseMutation>;
+export type UpdateEnterpriseMutationResult = Apollo.MutationResult<UpdateEnterpriseMutation>;
+export type UpdateEnterpriseMutationOptions = Apollo.BaseMutationOptions<UpdateEnterpriseMutation, UpdateEnterpriseMutationVariables>;
+export const GetEnterpriseDocument = gql`
+    query getEnterprise($id: ID!) {
+  getEnterprise(id: $id) {
+    cnpj
+    commercialName
+    description
+    id
+    insertedAt
+    name
+    updatedAt
+  }
+}
+    `;
+
+/**
+ * __useGetEnterpriseQuery__
+ *
+ * To run a query within a React component, call `useGetEnterpriseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEnterpriseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEnterpriseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetEnterpriseQuery(baseOptions: Apollo.QueryHookOptions<GetEnterpriseQuery, GetEnterpriseQueryVariables> & ({ variables: GetEnterpriseQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEnterpriseQuery, GetEnterpriseQueryVariables>(GetEnterpriseDocument, options);
+      }
+export function useGetEnterpriseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEnterpriseQuery, GetEnterpriseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEnterpriseQuery, GetEnterpriseQueryVariables>(GetEnterpriseDocument, options);
+        }
+export function useGetEnterpriseSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetEnterpriseQuery, GetEnterpriseQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetEnterpriseQuery, GetEnterpriseQueryVariables>(GetEnterpriseDocument, options);
+        }
+export type GetEnterpriseQueryHookResult = ReturnType<typeof useGetEnterpriseQuery>;
+export type GetEnterpriseLazyQueryHookResult = ReturnType<typeof useGetEnterpriseLazyQuery>;
+export type GetEnterpriseSuspenseQueryHookResult = ReturnType<typeof useGetEnterpriseSuspenseQuery>;
+export type GetEnterpriseQueryResult = Apollo.QueryResult<GetEnterpriseQuery, GetEnterpriseQueryVariables>;
 export const ListEnterprisesDocument = gql`
     query listEnterprises($offset: Int!, $limit: Int!) {
   getTotalEnterprises

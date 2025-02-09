@@ -1,0 +1,11 @@
+query getEnterprise($id: ID!) {
+  getEnterprise(id: $id) {
+    cnpj
+    commercialName
+    description
+    id
+    insertedAt
+    name
+    updatedAt
+  }
+}

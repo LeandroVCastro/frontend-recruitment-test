@@ -1,0 +1,23 @@
+mutation updateEnterprise(
+  $id: ID!
+  $name: String!
+  $commercialName: String!
+  $cnpj: String!
+  $description: String!
+) {
+  updateEnterprise(
+    id: $id
+    name: $name
+    commercialName: $commercialName
+    cnpj: $cnpj
+    description: $description
+  ) {
+    cnpj
+    commercialName
+    description
+    id
+    insertedAt
+    name
+    updatedAt
+  }
+}
