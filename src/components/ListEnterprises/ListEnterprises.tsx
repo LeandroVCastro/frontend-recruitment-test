@@ -7,6 +7,7 @@ import { useEnterprisesStore } from "../../states/enterprisesState";
 import { useEffect } from "react";
 import { useListEnterprisesQuery } from "../../generated/graphql";
 import { LoadingComponent } from "../Loading/Loading";
+import { EmptyStateComponent } from "../EmptyState/EmptyState";
 
 export const ListEnterprisesComponent = () => {
   const [page, setPage] = useState(0);
@@ -20,7 +21,7 @@ export const ListEnterprisesComponent = () => {
     },
   });
 
-  const { setEnterprisesList } = useEnterprisesStore();
+  const { enterprisesList, setEnterprisesList } = useEnterprisesStore();
 
   useEffect(() => {
     if (data?.listEnterprises?.items) {
@@ -51,12 +52,21 @@ export const ListEnterprisesComponent = () => {
           <TableBody>
             <TableRow>
               <TableCell colSpan={6}>
-                <LoadingComponent />
+                <LoadingComponent className="py-8" />
               </TableCell>
             </TableRow>
           </TableBody>
         )}
         {!loading && <BodyListEnterpriseComponent />}
+        {!loading && enterprisesList.length === 0 && (
+          <TableBody>
+            <TableRow>
+              <TableCell colSpan={6}>
+                <EmptyStateComponent className="py-8" />
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        )}
       </Table>
       <TablePagination
         component="div"

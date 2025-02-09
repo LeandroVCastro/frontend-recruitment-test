@@ -14,7 +14,9 @@ const App = () => {
         justifyContent={`space-between`}
         className="px-4 py-8"
       >
-        <Typography variant="h4">Enterprise Manager</Typography>
+        <Typography variant="h4" color="primary" className="font-bold">
+          Enterprise Manager
+        </Typography>
         <Button variant="contained" startIcon={<AddIcon />} color="primary">
           New Enterprise
         </Button>
