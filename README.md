@@ -6,25 +6,32 @@
 
 > I recommend using [NVM](https://github.com/nvm-sh/nvm) to run this project, but you can run it using node v23.5.0.
 
-> If you're using NVM, select the correct Node's version:
+### Is it your first time running this project?
+
+```bash
+# You just need to run this command on the first time
+cp .env.example .env
+```
+
+### If you're using NVM, select the correct Node's version:
 
 ```bash
 nvm use
 ```
 
-> If you don't have yarn installed, install it:
+### If you don't have yarn installed, install it:
 
 ```bash
 npm install --global yarn
 ```
 
-> Install project's dependencies
+### Install project's dependencies
 
 ```bash
 yarn
 ```
 
-> Start the server
+### Start the server
 
 ```bash
 yarn start
