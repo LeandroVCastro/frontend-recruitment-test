@@ -13,6 +13,7 @@ import {
 import { enqueueSnackbar } from "notistack";
 import { formatGraphQLErrors } from "../../helpers/formatGraphQLErrors";
 import { ApolloError } from "@apollo/client";
+import moment from "moment";
 
 export const BodyListEnterpriseComponent = () => {
   const { enterprisesList } = useEnterprisesStore();
@@ -61,8 +62,12 @@ export const BodyListEnterpriseComponent = () => {
             <TableCell align="right">{row.commercialName}</TableCell>
             <TableCell align="right">{row.description}</TableCell>
             <TableCell align="right">{row.cnpj}</TableCell>
-            <TableCell align="right">{row.insertedAt}</TableCell>
-            <TableCell align="right">{row.updatedAt}</TableCell>
+            <TableCell align="right">
+              {moment(row.insertedAt).format("DD/MM/YYYY HH:mm:ss")}
+            </TableCell>
+            <TableCell align="right">
+              {moment(row.updatedAt).format("DD/MM/YYYY HH:mm:ss")}
+            </TableCell>
             <TableCell align="right">
               <IconButton
                 aria-label="delete"

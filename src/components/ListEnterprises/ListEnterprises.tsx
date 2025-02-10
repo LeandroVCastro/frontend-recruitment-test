@@ -1,4 +1,10 @@
-import { Table, TableBody, TableCell, TableRow } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@mui/material";
 import TablePagination from "@mui/material/TablePagination";
 import { useState } from "react";
 import { HeaderListEnterpriseComponent } from "./HeaderListEnterprise";
@@ -49,28 +55,30 @@ export const ListEnterprisesComponent = () => {
 
   return (
     <>
-      <Table size="small" className="w-full" aria-label="Enterprises Table">
-        <HeaderListEnterpriseComponent />
-        {loading && (
-          <TableBody>
-            <TableRow>
-              <TableCell colSpan={7}>
-                <LoadingComponent className="py-8" />
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        )}
-        {!loading && <BodyListEnterpriseComponent />}
-        {!loading && enterprisesList.length === 0 && (
-          <TableBody>
-            <TableRow>
-              <TableCell colSpan={7}>
-                <EmptyStateComponent className="py-8" />
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        )}
-      </Table>
+      <TableContainer>
+        <Table size="small" className="w-full" aria-label="Enterprises Table">
+          <HeaderListEnterpriseComponent />
+          {loading && (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <LoadingComponent className="py-8" />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+          {!loading && <BodyListEnterpriseComponent />}
+          {!loading && enterprisesList.length === 0 && (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <EmptyStateComponent className="py-8" />
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
+        </Table>
+      </TableContainer>
       <TablePagination
         component="div"
         count={totalEnterprises}
