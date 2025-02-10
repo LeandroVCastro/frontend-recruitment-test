@@ -5,14 +5,48 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import { useEnterprisesStore } from "../../states/enterprisesState";
 import { useState } from "react";
 import { EnterpriseFormComponent } from "../EnterpriseForm/EnterpriseForm";
+import { ConfirmDialogComponent } from "../ConfirmDialog/ConfirmDialog";
+import {
+  useDeleteEnterpriseMutation,
+  useListEnterprisesQuery,
+} from "../../generated/graphql";
+import { enqueueSnackbar } from "notistack";
+import { formatGraphQLErrors } from "../../helpers/formatGraphQLErrors";
+import { ApolloError } from "@apollo/client";
 
 export const BodyListEnterpriseComponent = () => {
   const { enterprisesList } = useEnterprisesStore();
   const [showFormEditEnterprise, setShowFormEditEnterprise] = useState(false);
+  const [showConfirmDialogDelete, setShowConfirmDialogDelete] = useState(false);
+  const [deleteEnterpriseFetch, {}] = useDeleteEnterpriseMutation();
+  const { refetch: listEnterprisesFetch } = useListEnterprisesQuery({
+    variables: {
+      offset: 0,
+      limit: 10,
+    },
+    fetchPolicy: "standby",
+  });
+
   const [id, setId] = useState<string | undefined>(undefined);
 
   const editEnterprise = () => {
     setShowFormEditEnterprise(true);
+  };
+
+  const deleteEnterprise = async (ok: boolean) => {
+    setShowConfirmDialogDelete(false);
+    if (!ok) return;
+    try {
+      await deleteEnterpriseFetch({ variables: { id: id! } });
+      await listEnterprisesFetch();
+    } catch (requestError) {
+      const errors = await formatGraphQLErrors(requestError as ApolloError);
+      for (let message of errors) {
+        enqueueSnackbar(message, {
+          variant: "error",
+        });
+      }
+    }
   };
 
   return (
@@ -30,7 +64,14 @@ export const BodyListEnterpriseComponent = () => {
             <TableCell align="right">{row.insertedAt}</TableCell>
             <TableCell align="right">{row.updatedAt}</TableCell>
             <TableCell align="right">
-              <IconButton aria-label="delete" color="error">
+              <IconButton
+                aria-label="delete"
+                color="error"
+                onClick={() => {
+                  setId(row.id!);
+                  setShowConfirmDialogDelete(true);
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
               <IconButton
@@ -53,6 +94,10 @@ export const BodyListEnterpriseComponent = () => {
           setShowFormEditEnterprise(false);
           setId(undefined);
         }}
+      />
+      <ConfirmDialogComponent
+        open={showConfirmDialogDelete}
+        onClose={deleteEnterprise}
       />
     </>
   );

@@ -168,6 +168,13 @@ export type CreateEnterpriseMutationVariables = Exact<{
 
 export type CreateEnterpriseMutation = { __typename?: 'RootMutationType', createEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
 
+export type DeleteEnterpriseMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteEnterpriseMutation = { __typename?: 'RootMutationType', deleteEnterprise?: { __typename?: 'DeleteEnterpriseResponse', success?: boolean | null } | null };
+
 export type UpdateEnterpriseMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   name: Scalars['String']['input'];
@@ -247,6 +254,39 @@ export function useCreateEnterpriseMutation(baseOptions?: Apollo.MutationHookOpt
 export type CreateEnterpriseMutationHookResult = ReturnType<typeof useCreateEnterpriseMutation>;
 export type CreateEnterpriseMutationResult = Apollo.MutationResult<CreateEnterpriseMutation>;
 export type CreateEnterpriseMutationOptions = Apollo.BaseMutationOptions<CreateEnterpriseMutation, CreateEnterpriseMutationVariables>;
+export const DeleteEnterpriseDocument = gql`
+    mutation deleteEnterprise($id: ID!) {
+  deleteEnterprise(id: $id) {
+    success
+  }
+}
+    `;
+export type DeleteEnterpriseMutationFn = Apollo.MutationFunction<DeleteEnterpriseMutation, DeleteEnterpriseMutationVariables>;
+
+/**
+ * __useDeleteEnterpriseMutation__
+ *
+ * To run a mutation, you first call `useDeleteEnterpriseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEnterpriseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEnterpriseMutation, { data, loading, error }] = useDeleteEnterpriseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteEnterpriseMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEnterpriseMutation, DeleteEnterpriseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEnterpriseMutation, DeleteEnterpriseMutationVariables>(DeleteEnterpriseDocument, options);
+      }
+export type DeleteEnterpriseMutationHookResult = ReturnType<typeof useDeleteEnterpriseMutation>;
+export type DeleteEnterpriseMutationResult = Apollo.MutationResult<DeleteEnterpriseMutation>;
+export type DeleteEnterpriseMutationOptions = Apollo.BaseMutationOptions<DeleteEnterpriseMutation, DeleteEnterpriseMutationVariables>;
 export const UpdateEnterpriseDocument = gql`
     mutation updateEnterprise($id: ID!, $name: String!, $commercialName: String!, $cnpj: String!, $description: String!) {
   updateEnterprise(

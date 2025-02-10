@@ -1,0 +1,5 @@
+mutation deleteEnterprise($id: ID!) {
+  deleteEnterprise(id: $id) {
+    success
+  }
+}
