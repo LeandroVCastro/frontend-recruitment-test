@@ -54,7 +54,7 @@ export const ListEnterprisesComponent = () => {
         {loading && (
           <TableBody>
             <TableRow>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={7}>
                 <LoadingComponent className="py-8" />
               </TableCell>
             </TableRow>
@@ -64,7 +64,7 @@ export const ListEnterprisesComponent = () => {
         {!loading && enterprisesList.length === 0 && (
           <TableBody>
             <TableRow>
-              <TableCell colSpan={6}>
+              <TableCell colSpan={7}>
                 <EmptyStateComponent className="py-8" />
               </TableCell>
             </TableRow>

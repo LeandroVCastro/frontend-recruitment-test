@@ -5,6 +5,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import Grid from "@mui/material/Grid2";
 import {
+  NotesDefault,
   RootMutationTypeCreateEnterpriseArgs,
   useCreateEnterpriseMutation,
   useGetEnterpriseQuery,
@@ -20,6 +21,8 @@ import { InputCnpjEnterpriseFormComponent } from "./InputCnpj";
 import { InputDescriptionEnterpriseFormComponent } from "./InputDescription";
 import { ActionsEnterpriseForm } from "./ActionsEnterpriseForm";
 import { LoadingComponent } from "../Loading/Loading";
+import { ListNotesComponent } from "../ListNotes/ListNotes";
+import { useEnterprisesStore } from "../../states/enterprisesState";
 
 type EnterpriseFormProps = {
   open: boolean;
@@ -29,11 +32,14 @@ type EnterpriseFormProps = {
 
 export const EnterpriseFormComponent = (props: EnterpriseFormProps) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { setNotes } = useEnterprisesStore();
   const methods = useForm<RootMutationTypeCreateEnterpriseArgs>();
   const { handleSubmit, setValue, reset } = methods;
 
-  const [createEnterprise, {}] = useCreateEnterpriseMutation();
-  const [updateEnterprise, {}] = useUpdateEnterpriseMutation();
+  const [createEnterprise, { loading: loadingCreate }] =
+    useCreateEnterpriseMutation();
+  const [updateEnterprise, { loading: loadingUpdate }] =
+    useUpdateEnterpriseMutation();
 
   const { refetch } = useListEnterprisesQuery({
     variables: {
@@ -41,11 +47,13 @@ export const EnterpriseFormComponent = (props: EnterpriseFormProps) => {
       limit: 10,
     },
     initialFetchPolicy: "standby",
+    nextFetchPolicy: "no-cache",
   });
 
   const { loading, refetch: fetchEnterprise } = useGetEnterpriseQuery({
     variables: { id: props.id! },
-    fetchPolicy: "standby",
+    initialFetchPolicy: "standby",
+    nextFetchPolicy: "no-cache",
   });
 
   React.useEffect(() => {
@@ -63,6 +71,7 @@ export const EnterpriseFormComponent = (props: EnterpriseFormProps) => {
           );
           setValue("cnpj", response.data.getEnterprise.cnpj!);
           setValue("description", response.data.getEnterprise.description!);
+          setNotes((response.data.getEnterprise.notes as NotesDefault[]) ?? []);
         } catch (requestError) {
           const errors = await formatGraphQLErrors(requestError as ApolloError);
           for (let message of errors) {
@@ -126,19 +135,23 @@ export const EnterpriseFormComponent = (props: EnterpriseFormProps) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <Grid container direction={"column"} gap={2}>
-              {!loading ? (
+              {!loading && !loadingCreate && !loadingUpdate ? (
                 <>
                   <InputNameEnterpriseFormComponent />
                   <InputCommercialNameEnterpriseFormComponent />
                   <InputCnpjEnterpriseFormComponent />
                   <InputDescriptionEnterpriseFormComponent />
+                  {props.id && <ListNotesComponent enterpriseId={props.id} />}
                 </>
               ) : (
                 <LoadingComponent />
               )}
             </Grid>
           </DialogContent>
-          <ActionsEnterpriseForm close={close} />
+          <ActionsEnterpriseForm
+            close={close}
+            loading={loading || loadingCreate || loadingUpdate}
+          />
         </form>
       </FormProvider>
     </Dialog>

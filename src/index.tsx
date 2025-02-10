@@ -10,7 +10,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Container } from "@mui/material";
-import { SnackbarProvider, VariantType, useSnackbar } from "notistack";
+import { SnackbarProvider } from "notistack";
+import { StyledEngineProvider } from "@mui/material/styles";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

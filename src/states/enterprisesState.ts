@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { EnterpriseDefault } from "../generated/graphql";
+import { EnterpriseDefault, NotesDefault } from "../generated/graphql";
 
 interface EnterprisesState {
   enterprisesList: EnterpriseDefault[];
@@ -7,6 +7,9 @@ interface EnterprisesState {
 
   totalEnterprises: number;
   setTotalEnterprises: (newValue: number) => void;
+
+  notes: NotesDefault[];
+  setNotes: (newNotes: NotesDefault[]) => void;
 }
 
 export const useEnterprisesStore = create<EnterprisesState>()((set) => ({
@@ -15,4 +18,6 @@ export const useEnterprisesStore = create<EnterprisesState>()((set) => ({
   totalEnterprises: 0,
   setTotalEnterprises: (newValue) =>
     set(() => ({ totalEnterprises: newValue })),
+  notes: [],
+  setNotes: (newNotes) => set(() => ({ notes: newNotes })),
 }));

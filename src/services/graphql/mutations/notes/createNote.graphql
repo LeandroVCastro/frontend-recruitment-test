@@ -1,0 +1,9 @@
+mutation createNote($enterpriseId: ID!, $note: String!) {
+  createNote(enterpriseId: $enterpriseId, note: $note) {
+    id
+    enterpriseId
+    insertedAt
+    note
+    updatedAt
+  }
+}

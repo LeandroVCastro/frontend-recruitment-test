@@ -7,5 +7,11 @@ query getEnterprise($id: ID!) {
     insertedAt
     name
     updatedAt
+    notes {
+      id
+      insertedAt
+      note
+      updatedAt
+    }
   }
 }

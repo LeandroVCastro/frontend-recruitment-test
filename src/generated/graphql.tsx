@@ -186,12 +186,35 @@ export type UpdateEnterpriseMutationVariables = Exact<{
 
 export type UpdateEnterpriseMutation = { __typename?: 'RootMutationType', updateEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
 
+export type CreateNoteMutationVariables = Exact<{
+  enterpriseId: Scalars['ID']['input'];
+  note: Scalars['String']['input'];
+}>;
+
+
+export type CreateNoteMutation = { __typename?: 'RootMutationType', createNote?: { __typename?: 'CreateNoteResponse', id?: string | null, enterpriseId?: string | null, insertedAt?: string | null, note?: string | null, updatedAt?: string | null } | null };
+
+export type DeleteNoteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteNoteMutation = { __typename?: 'RootMutationType', deleteNote?: { __typename?: 'DeleteNoteResponse', success?: boolean | null } | null };
+
+export type UpdateNoteMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  note: Scalars['String']['input'];
+}>;
+
+
+export type UpdateNoteMutation = { __typename?: 'RootMutationType', updateNote?: { __typename?: 'CreateNoteResponse', id?: string | null, enterpriseId?: string | null, insertedAt?: string | null, note?: string | null, updatedAt?: string | null } | null };
+
 export type GetEnterpriseQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetEnterpriseQuery = { __typename?: 'RootQueryType', getEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null } | null };
+export type GetEnterpriseQuery = { __typename?: 'RootQueryType', getEnterprise?: { __typename?: 'GetEnterpriseResponse', cnpj?: string | null, commercialName?: string | null, description?: string | null, id?: string | null, insertedAt?: string | null, name?: string | null, updatedAt?: string | null, notes?: Array<{ __typename?: 'NotesDefault', id?: string | null, insertedAt?: string | null, note?: string | null, updatedAt?: string | null } | null> | null } | null };
 
 export type ListEnterprisesQueryVariables = Exact<{
   offset: Scalars['Int']['input'];
@@ -336,6 +359,115 @@ export function useUpdateEnterpriseMutation(baseOptions?: Apollo.MutationHookOpt
 export type UpdateEnterpriseMutationHookResult = ReturnType<typeof useUpdateEnterpriseMutation>;
 export type UpdateEnterpriseMutationResult = Apollo.MutationResult<UpdateEnterpriseMutation>;
 export type UpdateEnterpriseMutationOptions = Apollo.BaseMutationOptions<UpdateEnterpriseMutation, UpdateEnterpriseMutationVariables>;
+export const CreateNoteDocument = gql`
+    mutation createNote($enterpriseId: ID!, $note: String!) {
+  createNote(enterpriseId: $enterpriseId, note: $note) {
+    id
+    enterpriseId
+    insertedAt
+    note
+    updatedAt
+  }
+}
+    `;
+export type CreateNoteMutationFn = Apollo.MutationFunction<CreateNoteMutation, CreateNoteMutationVariables>;
+
+/**
+ * __useCreateNoteMutation__
+ *
+ * To run a mutation, you first call `useCreateNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createNoteMutation, { data, loading, error }] = useCreateNoteMutation({
+ *   variables: {
+ *      enterpriseId: // value for 'enterpriseId'
+ *      note: // value for 'note'
+ *   },
+ * });
+ */
+export function useCreateNoteMutation(baseOptions?: Apollo.MutationHookOptions<CreateNoteMutation, CreateNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateNoteMutation, CreateNoteMutationVariables>(CreateNoteDocument, options);
+      }
+export type CreateNoteMutationHookResult = ReturnType<typeof useCreateNoteMutation>;
+export type CreateNoteMutationResult = Apollo.MutationResult<CreateNoteMutation>;
+export type CreateNoteMutationOptions = Apollo.BaseMutationOptions<CreateNoteMutation, CreateNoteMutationVariables>;
+export const DeleteNoteDocument = gql`
+    mutation deleteNote($id: ID!) {
+  deleteNote(id: $id) {
+    success
+  }
+}
+    `;
+export type DeleteNoteMutationFn = Apollo.MutationFunction<DeleteNoteMutation, DeleteNoteMutationVariables>;
+
+/**
+ * __useDeleteNoteMutation__
+ *
+ * To run a mutation, you first call `useDeleteNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteNoteMutation, { data, loading, error }] = useDeleteNoteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteNoteMutation(baseOptions?: Apollo.MutationHookOptions<DeleteNoteMutation, DeleteNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteNoteMutation, DeleteNoteMutationVariables>(DeleteNoteDocument, options);
+      }
+export type DeleteNoteMutationHookResult = ReturnType<typeof useDeleteNoteMutation>;
+export type DeleteNoteMutationResult = Apollo.MutationResult<DeleteNoteMutation>;
+export type DeleteNoteMutationOptions = Apollo.BaseMutationOptions<DeleteNoteMutation, DeleteNoteMutationVariables>;
+export const UpdateNoteDocument = gql`
+    mutation updateNote($id: ID!, $note: String!) {
+  updateNote(id: $id, note: $note) {
+    id
+    enterpriseId
+    insertedAt
+    note
+    updatedAt
+  }
+}
+    `;
+export type UpdateNoteMutationFn = Apollo.MutationFunction<UpdateNoteMutation, UpdateNoteMutationVariables>;
+
+/**
+ * __useUpdateNoteMutation__
+ *
+ * To run a mutation, you first call `useUpdateNoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNoteMutation, { data, loading, error }] = useUpdateNoteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      note: // value for 'note'
+ *   },
+ * });
+ */
+export function useUpdateNoteMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNoteMutation, UpdateNoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNoteMutation, UpdateNoteMutationVariables>(UpdateNoteDocument, options);
+      }
+export type UpdateNoteMutationHookResult = ReturnType<typeof useUpdateNoteMutation>;
+export type UpdateNoteMutationResult = Apollo.MutationResult<UpdateNoteMutation>;
+export type UpdateNoteMutationOptions = Apollo.BaseMutationOptions<UpdateNoteMutation, UpdateNoteMutationVariables>;
 export const GetEnterpriseDocument = gql`
     query getEnterprise($id: ID!) {
   getEnterprise(id: $id) {
@@ -346,6 +478,12 @@ export const GetEnterpriseDocument = gql`
     insertedAt
     name
     updatedAt
+    notes {
+      id
+      insertedAt
+      note
+      updatedAt
+    }
   }
 }
     `;
